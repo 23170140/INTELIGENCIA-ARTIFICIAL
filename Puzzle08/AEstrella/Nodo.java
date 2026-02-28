@@ -1,4 +1,4 @@
-package Puzzle08.AEstrella;
+package AEstrella;
 import java.util.ArrayList;
 
 public class Nodo implements Comparable<Nodo> {

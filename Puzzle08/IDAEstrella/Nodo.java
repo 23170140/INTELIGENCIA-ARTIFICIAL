@@ -1,61 +1,67 @@
-package Puzzle24;
+package IDAEstrella;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class Nodo {
-    int [][] estado;
+public class Nodo implements Comparable<Nodo> {
+    int[][] estado;
     ArrayList<Nodo> hijos = new ArrayList<Nodo>();
     Nodo padre;
-    int nivel;
-    int costo;
+    int g; // costo acumulado (profundidad)
+    int h; // heuristica (distancia Manhattan)
+    int f; // f = g + h
 
     public Nodo(int[][] estado) {
         this.estado = estado;
         hijos = null;
         padre = null;
-        nivel = 0;
-        costo = 0;
+        this.g = 0;
+        this.h = 0;
+        this.f = 0;
     }
 
-    public int [][] getEstado() {
+    public int[][] getEstado() {
         return estado;
     }
-    public void setEstado(int [][] estado) {
+
+    public void setEstado(int[][] estado) {
         this.estado = estado;
     }
+
     public ArrayList<Nodo> getHijos() {
         return hijos;
     }
+
     public void setHijos(ArrayList<Nodo> hijos) {
         this.hijos = hijos;
-        if(hijos != null) {
+        if (hijos != null) {
             for (Nodo hijo : hijos) {
                 hijo.setPadre(this);
             }
         }
     }
+
     public Nodo getPadre() {
         return padre;
     }
+
     public void setPadre(Nodo padre) {
         this.padre = padre;
     }
-    public int getNivel() {
-        return nivel;
-    }
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
-    }
-    public int getCosto() {
-        return costo;
-    }
-    public void setCosto(int costo) {
-        this.costo = costo;
+
+    public int getG() { return g; }
+    public void setG(int g) { this.g = g; }
+    public int getH() { return h; }
+    public void setH(int h) { this.h = h; }
+    public int getF() { return f; }
+    public void setF(int f) { this.f = f; }
+
+    public void calcularF() {
+        this.f = this.g + this.h;
     }
 
     /**
-     * Convierte el estado a String para usar en HashSet
+     * Convierte el estado a String para comparaciones rapidas
      */
     public String estadoToString() {
         StringBuilder sb = new StringBuilder();
@@ -68,7 +74,7 @@ public class Nodo {
     }
 
     /**
-     * Genera todos los sucesores (movimientos posibles del cero)
+     * Genera todos los sucesores (movimientos posibles del cero) en tablero 5x5
      */
     public List<Nodo> generarSucesores() {
         List<Nodo> sucesores = new ArrayList<>();
@@ -83,7 +89,7 @@ public class Nodo {
             nuevo[fila - 1][col] = 0;
             Nodo hijo = new Nodo(nuevo);
             hijo.setPadre(this);
-            hijo.setNivel(this.nivel + 1);
+            hijo.setG(this.g + 1);
             sucesores.add(hijo);
         }
         // Mover abajo
@@ -93,7 +99,7 @@ public class Nodo {
             nuevo[fila + 1][col] = 0;
             Nodo hijo = new Nodo(nuevo);
             hijo.setPadre(this);
-            hijo.setNivel(this.nivel + 1);
+            hijo.setG(this.g + 1);
             sucesores.add(hijo);
         }
         // Mover izquierda
@@ -103,7 +109,7 @@ public class Nodo {
             nuevo[fila][col - 1] = 0;
             Nodo hijo = new Nodo(nuevo);
             hijo.setPadre(this);
-            hijo.setNivel(this.nivel + 1);
+            hijo.setG(this.g + 1);
             sucesores.add(hijo);
         }
         // Mover derecha
@@ -113,7 +119,7 @@ public class Nodo {
             nuevo[fila][col + 1] = 0;
             Nodo hijo = new Nodo(nuevo);
             hijo.setPadre(this);
-            hijo.setNivel(this.nivel + 1);
+            hijo.setG(this.g + 1);
             sucesores.add(hijo);
         }
         return sucesores;
@@ -138,5 +144,10 @@ public class Nodo {
             }
         }
         return nuevo;
+    }
+
+    @Override
+    public int compareTo(Nodo otro) {
+        return Integer.compare(this.f, otro.f);
     }
 }

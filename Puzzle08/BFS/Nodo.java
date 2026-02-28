@@ -1,4 +1,4 @@
-package Puzzle08.BFS;
+package BFS;
 import java.util.ArrayList;
 
 public class Nodo {

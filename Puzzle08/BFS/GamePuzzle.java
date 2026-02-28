@@ -1,4 +1,4 @@
-package Puzzle08.BFS;
+package BFS;
 import java.util.ArrayList;
 import java.util.Arrays;
 public class GamePuzzle {
@@ -36,7 +36,7 @@ public class GamePuzzle {
            }
 
            visitados.add(revisar);
-            if(pcero[0]!=0){
+            if(pcero[0]>0){
                 Nodo hijo = new Nodo(clonar(revisar.getEstado()));
                 int arriba=hijo.getEstado()[pcero[0]-1][pcero[1]];
                 hijo.getEstado()[pcero[0]-1][pcero[1]]=0;
@@ -46,7 +46,7 @@ public class GamePuzzle {
                     hijos.add(hijo);
                 }
             }
-            if(pcero[0]!=2){
+            if(pcero[0]<2){
                 Nodo hijo = new Nodo(clonar(revisar.getEstado()));
                 int abajo=hijo.getEstado()[pcero[0]+1][pcero[1]];
                 hijo.getEstado()[pcero[0]+1][pcero[1]]=0;
@@ -56,7 +56,7 @@ public class GamePuzzle {
                     hijos.add(hijo);
                 }
             }
-            if(pcero[1]!=0){
+            if(pcero[1]>0){
                 Nodo hijo = new Nodo(clonar(revisar.getEstado()));
                 int izquierda=hijo.getEstado()[pcero[0]][pcero[1]-1];
                 hijo.getEstado()[pcero[0]][pcero[1]-1]=0;
@@ -66,7 +66,7 @@ public class GamePuzzle {
                     hijos.add(hijo);
                 }
             }
-            if(pcero[1]!=2){
+            if(pcero[1]<2){
                 Nodo hijo = new Nodo(clonar(revisar.getEstado()));
                 int derecha=hijo.getEstado()[pcero[0]][pcero[1]+1];
                 hijo.getEstado()[pcero[0]][pcero[1]+1]=0;
@@ -93,7 +93,7 @@ public class GamePuzzle {
 
 
     private static int[] encontrarCero(int [][] estado){
-        int [] pos = new int[2];
+        int [] pos = new int[2]; 
         for(int i=0; i<estado.length; i++){
             for(int j=0; j<estado[i].length; j++){
                 if(estado[i][j] == 0){
