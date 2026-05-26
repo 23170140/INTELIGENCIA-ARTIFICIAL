@@ -7,11 +7,3 @@ audio_cache/
 videos/
 videos_output/
 
-# Modelos pesados de IA y Datasets (Exceden los 100MB de GitHub)
-mi_vit_rocket_league/
-datasets_rocket_league/
-
-# Archivos multimedia sueltos
-*.mp4
-*.wav
-*.jpg
