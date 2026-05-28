@@ -19,3 +19,5 @@ Thumbs.db
 models/
 *.keras
 *.h5
+
+.gitignore
