@@ -7,6 +7,7 @@
 # In[1]:
 
 import pandas as pd
+from pathlib import Path
 
 
 # In[2]:
@@ -19,7 +20,8 @@ print(pd.__version__)
 
 # In[4]:
 
-exam_data = pd.read_csv('../data/exams.csv', quotechar='"')
+data_path = Path(__file__).resolve().parents[2] / 'data' / 'exams.csv'
+exam_data = pd.read_csv(data_path, quotechar='"')
 exam_data
 
 

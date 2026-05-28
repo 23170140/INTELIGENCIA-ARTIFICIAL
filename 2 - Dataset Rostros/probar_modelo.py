@@ -2,14 +2,18 @@ import cv2
 import numpy as np
 import tensorflow as tf
 import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
 
 # 1. Cargar el modelo que acabas de entrenar
 print("Cargando el cerebro de la IA...")
-model = tf.keras.models.load_model('modelo_reconocimiento_facial.keras')
+model_path = BASE_DIR / 'modelo_reconocimiento_facial.keras'
+model = tf.keras.models.load_model(model_path)
 
 # 2. Obtener los nombres de las clases (las carpetas)
 # Keras las ordena alfabéticamente por defecto
-ruta_entrenamiento = os.path.join('Dataset_Final', 'train')
+ruta_entrenamiento = BASE_DIR / 'Dataset_Final' / 'train'
 nombres_clases = sorted(os.listdir(ruta_entrenamiento))
 print(f"Clases detectadas: {nombres_clases}")
 

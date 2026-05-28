@@ -1,0 +1,21 @@
+# Ignore virtual environments
+.venv/
+.venv-py311/
+venv/
+env/
+ENV/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Editor / OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Model and data outputs (optional)
+models/
+*.keras
+*.h5

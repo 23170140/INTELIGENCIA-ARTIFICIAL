@@ -2,7 +2,7 @@ import cv2
 import os
 
 # 1. Configuración inicial
-nombre_persona = 'NorbertoBeltran' 
+nombre_persona = 'Encines' 
 path_datos = 'dataset' # Carpeta donde se guardarán las fotos
 path_completo = os.path.join(path_datos, nombre_persona)
 

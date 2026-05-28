@@ -2,26 +2,36 @@ import tensorflow as tf
 from tensorflow.keras import layers, models
 from tensorflow.keras.applications import MobileNetV2
 import os
+from pathlib import Path
 
 # 1. Configuración de parámetros
 IMG_SIZE = (160, 160)
 BATCH_SIZE = 32
-DATA_DIR = 'Dataset_Final'
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / 'Dataset_Final'
+TRAIN_DIR = DATA_DIR / 'train'
+VAL_DIR = DATA_DIR / 'val'
+
+if not TRAIN_DIR.exists() or not VAL_DIR.exists():
+    raise FileNotFoundError(
+        f"No se encontró el dataset esperado en '{DATA_DIR}'. "
+        "Verifica que existan las carpetas 'train' y 'val'."
+    )
 
 # Determinar número de clases automáticamente contando las carpetas
-NUM_CLASSES = len(os.listdir(os.path.join(DATA_DIR, 'train')))
+NUM_CLASSES = len(os.listdir(TRAIN_DIR))
 
 # 2. Carga de Datos
 print("Cargando datos de entrenamiento...")
 train_dataset = tf.keras.utils.image_dataset_from_directory(
-    os.path.join(DATA_DIR, 'train'),
+    TRAIN_DIR,
     shuffle=True,
     batch_size=BATCH_SIZE,
     image_size=IMG_SIZE)
 
 print("Cargando datos de validación...")
 validation_dataset = tf.keras.utils.image_dataset_from_directory(
-    os.path.join(DATA_DIR, 'val'),
+    VAL_DIR,
     shuffle=True,
     batch_size=BATCH_SIZE,
     image_size=IMG_SIZE)
@@ -76,5 +86,5 @@ history = model.fit(
 )
 
 # 7. Guardar el Modelo Entrenado
-model.save('modelo_reconocimiento_facial.keras')
+model.save(BASE_DIR / 'modelo_reconocimiento_facial.keras')
 print("Entrenamiento finalizado y modelo guardado como 'modelo_reconocimiento_facial.keras'.")
